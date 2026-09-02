@@ -71,14 +71,6 @@ chmod +x install_deps.sh
 
 The script installs the required system packages and the bundled local packages from `deps/`. Run it once after downloading or updating the runtime package.
 
-After installation, check for missing shared libraries:
-
-```bash
-ldd build/export/mc/bin/mc_ctrl | grep "not found" || true
-```
-
-No output means that no missing shared libraries were detected. If a library is listed, rerun `install_deps.sh` and review its error output before starting motion control.
-
 ### 3. Select the robot model
 
 Open the launcher:
@@ -130,36 +122,7 @@ Save the file after making the change.
 > [!IMPORTANT]
 > An incorrect robot type may load incompatible robot parameters. Verify `ROBOT_TYPE` before every run.
 
-### 4. Configure the robot network
-
-Open the SDK configuration:
-
-```bash
-vim config/sdk_config.yaml
-```
-
-Set the robot IP address and port. For example:
-
-```yaml
-target_ip: "192.168.234.1"
-target_port: 43988
-```
-
-Synchronize the runtime configuration after editing it:
-
-```bash
-cp config/sdk_config.yaml build/export/config/sdk_config.yaml
-```
-
-Verify that the robot is reachable:
-
-```bash
-ping -c 3 192.168.234.1
-```
-
-Replace the example address with the actual robot IP address.
-
-### 5. Start motion control
+### 4. Start motion control
 
 Before startup, confirm that:
 
@@ -211,8 +174,6 @@ SDK_CLIENT_IP=<CONTROL_COMPUTER_WIRED_IP> ./run_mc.sh r
 ### The robot cannot be reached
 
 - Check the network cable.
-- Verify that `target_ip` is the robot's actual IP address.
-- Make sure both copies of `sdk_config.yaml` are synchronized.
 - Confirm that the control computer and robot can reach each other.
 - Confirm that the robot driver is running.
 
